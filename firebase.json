@@ -1,0 +1,9 @@
+{
+  "firebase": "lovenotes",
+  "public": ".",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ]
+}
