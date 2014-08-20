@@ -18,6 +18,9 @@
     <!-- Firebase CDN -->
     <script src="https://cdn.firebase.com/js/client/1.0.19/firebase.js"></script>
 
+    <!-- Firebase simple login -->
+    <script src="https://cdn.firebase.com/js/simple-login/1.6.3/firebase-simple-login.js"></script>
+
     <!-- Css file-->
     <link rel="stylesheet" type="text/css" href="LoveNoteStyling.css">
 
@@ -30,10 +33,26 @@
 
 <div ng-controller="HelloController" >
 
+    <div class="header">
+        <div class="login">
+            <button ng-click="auth()">
+                Login
+            </button>
+        </div>
+    </div>
+
     <h1>Love Notes</h1>
 
     <p>This site is to send my baby love notes.</p>
     <h2>Hello {{helloTo.title}} !</h2>
+
+    <div class="box">
+        <div class="top">
+            <div class="latch">
+
+            </div>
+        </div>
+    </div>
 
 </div>
 

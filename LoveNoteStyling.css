@@ -1,3 +1,17 @@
 h1{
     color: blue;
 }
+
+.box{
+    background-color: #8b663a;
+    left: 30%;
+    width: 30%;
+    height: 20%;
+    border-radius: 5px;
+}
+.top{
+    background-color: #8B4513;
+    border-radius:5px 0px 0px 0px;
+    height: 20%;
+    width: 100%;
+}
