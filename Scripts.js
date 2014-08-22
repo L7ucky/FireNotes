@@ -1,7 +1,9 @@
-angular.module("myapp", [])
-    .controller("HelloController", function($scope) {
+var app = angular.module("FireNotes", ["firebase"]);
+    app.controller("AuthController", function($scope, $firebase) {
+        
         var fb = new Firebase("https://lovenotes.firebaseio.com");
-
+        var data = $firebase(fb);
+        
         var authClient = new FirebaseSimpleLogin(fb, function(error, user) {
             if (error) {
                 // an error occurred while attempting login
@@ -39,4 +41,8 @@ angular.module("myapp", [])
 
         $scope.helloTo = {};
         $scope.helloTo.title = "Andrew, AngularJS";
-    } );
+    });
+    app.controller("NotesController", function($scope, $firebase) {
+    
+    
+    });
