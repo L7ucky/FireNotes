@@ -1,8 +1,13 @@
 var app = angular.module("FireNotes", ["firebase"]);
-    app.controller("AuthController", function($scope, $firebase) {
+    app.controller("NotesController", function($scope, $firebase) {
         
+
         var fb = new Firebase("https://lovenotes.firebaseio.com");
-        var data = $firebase(fb);
+        var sync = $firebase(fb);
+        var data = sync.$asObject();
+        console.log("The angularFire object is: ");
+        console.log(data);
+
         
         var authClient = new FirebaseSimpleLogin(fb, function(error, user) {
             if (error) {
@@ -16,11 +21,11 @@ var app = angular.module("FireNotes", ["firebase"]);
             }
         });
 
-        fb.on('value', function (snapshot) {
-            console.log(snapshot.val());
-        }, function (errorObject) {
-            console.log('The read failed: ' + errorObject.code);
-        });
+//        fb.on('value', function (snapshot) {
+//            console.log(snapshot.val());
+//        }, function (errorObject) {
+//            console.log('The read failed: ' + errorObject.code);
+//        });
 
         var authRef = new Firebase("https://lovenotes.firebaseio.com/.info/authenticated");
         authRef.on("value", function(snap) {
@@ -42,7 +47,4 @@ var app = angular.module("FireNotes", ["firebase"]);
         $scope.helloTo = {};
         $scope.helloTo.title = "Andrew, AngularJS";
     });
-    app.controller("NotesController", function($scope, $firebase) {
     
-    
-    });
