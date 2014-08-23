@@ -3,19 +3,18 @@ var app = angular.module("FireNotes", ["firebase"]);
         
 
         var fb = new Firebase("https://lovenotes.firebaseio.com");
-        var sync = $firebase(fb);
-        var data = sync.$asObject();
-        console.log("The angularFire object is: ");
-        console.log(data);
+        var user ={};
 
         
-        var authClient = new FirebaseSimpleLogin(fb, function(error, user) {
+        var authClient = new FirebaseSimpleLogin(fb, function(error, sessionUser) {
             if (error) {
                 // an error occurred while attempting login
                 console.log(error);
-            } else if (user) {
+            } else if (sessionUser) {
                 // user authenticated with Firebase
-                console.log("User ID: " + user.uid + ", Provider: " + user.provider);
+                user = sessionUser;
+                addUser(sessionUser);
+                console.log("User ID: " + sessionUser.uid + ", Provider: " + sessionUser.provider);
             } else {
                 // user is logged out
             }
@@ -30,18 +29,27 @@ var app = angular.module("FireNotes", ["firebase"]);
         var authRef = new Firebase("https://lovenotes.firebaseio.com/.info/authenticated");
         authRef.on("value", function(snap) {
             if (snap.val() === true) {
-                alert("authenticated");
+                console.log("authenticated");
             } else {
-                alert("not authenticated");
+                console.log("not authenticated");
             }
         });
 
         $scope.auth = function(){
-            console.log(authClient.login('google', {
+            console.log("got here");
+            var user = authClient.login('google', {
                 rememberMe: true,
                 scope: 'https://www.googleapis.com/auth/plus.login'
-            }));
-
+            });
+        };
+        
+        var addUser = function(cUser){
+            fb.child('users').setWithPriority({name:{first:cUser.thirdPartyUserData.given_name,last:cUser.thirdPartyUserData.family_name}, 
+                    id:cUser.id, 
+                    email:cUser.email,
+                    gender:cUser.thirdPartyUserData.gender,
+                    google_imgURL:cUser.thirdPartyUserData.picture,
+                   },cUser.id);
         };
 
         $scope.helloTo = {};
