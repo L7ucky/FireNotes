@@ -4,6 +4,8 @@ var app = angular.module("FireNotes", ["firebase"]);
 
         var fb = new Firebase("https://lovenotes.firebaseio.com");
         var user ={};
+        var references = {};
+        var refs = {myUsers:{}};
 
         
         var authClient = new FirebaseSimpleLogin(fb, function(error, sessionUser) {
@@ -20,11 +22,6 @@ var app = angular.module("FireNotes", ["firebase"]);
             }
         });
 
-//        fb.on('value', function (snapshot) {
-//            console.log(snapshot.val());
-//        }, function (errorObject) {
-//            console.log('The read failed: ' + errorObject.code);
-//        });
 
         var authRef = new Firebase("https://lovenotes.firebaseio.com/.info/authenticated");
         authRef.on("value", function(snap) {
@@ -44,12 +41,12 @@ var app = angular.module("FireNotes", ["firebase"]);
         };
         
         var addUser = function(cUser){
-            fb.child('users').setWithPriority({name:{first:cUser.thirdPartyUserData.given_name,last:cUser.thirdPartyUserData.family_name}, 
+            fb.child('users').child(cUser.id).set({name:{first:cUser.thirdPartyUserData.given_name,last:cUser.thirdPartyUserData.family_name}, 
                     id:cUser.id, 
                     email:cUser.email,
                     gender:cUser.thirdPartyUserData.gender,
                     google_imgURL:cUser.thirdPartyUserData.picture,
-                   },cUser.id);
+                   });
         };
 
         $scope.helloTo = {};
